@@ -13,26 +13,26 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Placeholder navigation links - customize for your app
+  // Navigation links matching pastpal structure
   const navigationLinks = [
     {
       href: "/dashboard",
-      label: "Dashboard",
+      label: "DASHBOARD",
       isActive: pathname?.startsWith("/dashboard"),
     },
     {
       href: "/projects",
-      label: "Projects",
+      label: "PROJECTS",
       isActive: pathname?.startsWith("/projects"),
     },
     {
       href: "/analytics",
-      label: "Analytics",
+      label: "ANALYTICS",
       isActive: pathname?.startsWith("/analytics"),
     },
     {
       href: "/settings",
-      label: "Settings",
+      label: "SETTINGS",
       isActive: pathname?.startsWith("/settings"),
     },
   ];
@@ -44,8 +44,8 @@ export default function Navbar() {
         <div className="flex-shrink-0">
           <Link href="/">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-lg">
                   T
                 </span>
               </div>
@@ -78,12 +78,28 @@ export default function Navbar() {
 
         {/* Right side controls */}
         <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
-          {/* Notifications */}
+          {/* Language Selector */}
           <div className="relative">
-            <Bell className="h-5 w-5 text-muted-foreground hover:text-foreground cursor-pointer" />
-            <span className="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 text-xs text-primary-foreground bg-primary rounded-full">
-              3
-            </span>
+            <select className="appearance-none bg-transparent text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer pr-4">
+              <option value="en">ENGLISH</option>
+              <option value="es">ESPAÑOL</option>
+              <option value="fr">FRANÇAIS</option>
+            </select>
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <svg
+                className="w-3 h-3 text-muted-foreground"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
           </div>
 
           {/* User Menu */}

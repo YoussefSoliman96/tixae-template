@@ -3,21 +3,19 @@
 import { WelcomePanel } from "./WelcomePanel";
 import { ChatPanel } from "./ChatPanel";
 
-const MOBILE_HEIGHT = "h-[calc(100vh-6rem)]";
-const DESKTOP_HEIGHT = "md:h-[calc(100vh-5rem)]";
-
 export function MainInterface() {
   return (
-    <div
-      className={`flex flex-col lg:flex-row ${MOBILE_HEIGHT} ${DESKTOP_HEIGHT} overflow-hidden border-t border-border/50`}
-    >
-      {/* Left Panel - Main Content */}
-      <div className="flex-1 lg:border-r border-border/50">
-        <WelcomePanel />
+    <div className="h-full flex flex-col lg:flex-row bg-gradient-to-b from-background to-background/95">
+      {/* Main Content Area - Left Panel */}
+      <div className="flex flex-col min-h-0 lg:w-2/3 flex-1">
+        {/* Content Editor Container - Takes remaining height */}
+        <div className="flex-1 min-h-0 flex flex-col">
+          <WelcomePanel />
+        </div>
       </div>
 
-      {/* Right Panel - Chat/Interaction */}
-      <div className="w-full lg:w-[400px] xl:w-[450px]">
+      {/* Right Panel - Control Panel */}
+      <div className="lg:flex lg:w-1/3 xl:max-w-[360px]">
         <ChatPanel />
       </div>
     </div>

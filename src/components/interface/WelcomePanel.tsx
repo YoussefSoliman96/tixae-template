@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/button";
 import { useState } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 
 export function WelcomePanel() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -22,7 +22,7 @@ export function WelcomePanel() {
             className="gap-2"
           >
             <HelpCircle className="h-4 w-4" />
-            Show Welcome Guide
+            Show Welcome & FAQ
           </Button>
         </div>
       </div>
@@ -30,95 +30,112 @@ export function WelcomePanel() {
   }
 
   return (
-    <div className="h-full overflow-y-auto bg-background">
+    <div className="h-full overflow-y-auto bg-background relative">
+      {/* Scroll indicator */}
+      <div className="absolute top-4 right-4 text-xs text-muted-foreground/60 bg-card/80 backdrop-blur-sm rounded px-2 py-1 border border-border/30">
+        Scroll this area to view all content
+      </div>
+
       {/* Header */}
-      <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border/50 p-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Hello User, Welcome to Tixae</h1>
-          <Button
-            variant="ghost"
-            size="sm"
-            onPress={() => setShowWelcome(false)}
-            className="gap-2"
-          >
-            Close Guide
-            <ChevronDown className="h-4 w-4" />
-          </Button>
-        </div>
-        <p className="text-muted-foreground mt-2">
+      <div className="p-6 pb-4">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+          Hello User, Welcome to Tixae
+        </h1>
+        <p className="text-muted-foreground">
           Please read the instructions below. You can always return to this
-          screen by clicking the help button.
+          screen by clicking FAQ in the blue bar above.
         </p>
       </div>
 
-      {/* Content Area */}
-      <div className="p-6 max-w-4xl mx-auto">
-        <div className="prose prose-gray dark:prose-invert max-w-none">
-          <div className="bg-card border border-border/50 rounded-lg p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-3 text-primary">
-              Getting Started
-            </h2>
-            <p className="text-muted-foreground mb-4">
-              This is your workspace—well, it will be. Right now, you're seeing
-              this welcome screen. But once you get started, this area will be
-              filled with your actual content.
+      {/* Content sections */}
+      <div className="px-6 pb-6 space-y-6">
+        {/* Welcome section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-primary">
+            Welcome to Tixae, User
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            We're thrilled you're here.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            If you've ever wanted to create something amazing but didn't know
+            how to begin, you're in exactly the right place.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            This screen is your starting point. You can always return here by
+            clicking the "<strong>Show Welcome & FAQ</strong>" button in the
+            blue bar above.
+          </p>
+        </div>
+
+        {/* Your Workspace section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-primary">Your Workspace</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Right now, you're seeing this welcome message. But soon, this area
+            will be filled with your actual work—content, ideas, and creative
+            output you bring to life through a simple conversation.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            You don't need to plan everything or be a pro. You just need to
+            begin.
+          </p>
+        </div>
+
+        {/* How Tixae Works section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-primary">
+            How Tixae Works
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Look to the right. That's your assistant—it's the core of how Tixae
+            works.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            It's not a slide tool—it's the core of how Tixae works.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            You don't need to start with an outline or a full draft. Just talk.
+          </p>
+
+          <div className="space-y-3 ml-4">
+            <p className="text-muted-foreground leading-relaxed">Here's how:</p>
+            <p className="text-muted-foreground leading-relaxed">
+              Start a chat—type or speak.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Everything you say is saved automatically.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              When you're ready, just ask:
             </p>
           </div>
 
-          <div className="grid gap-6">
-            <div className="bg-card border border-border/50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <span className="text-2xl">👉</span>
-                Your Interactive Assistant
-              </h3>
-              <p className="text-muted-foreground mb-3">
-                Look to the right. That's your interactive assistant panel. It's
-                the core of how this application works.
-              </p>
-              <p className="text-muted-foreground">
-                You don't need to plan everything first. Just start interacting
-                and let the system guide you.
-              </p>
-            </div>
+          <p className="text-muted-foreground leading-relaxed italic ml-4">
+            "Can you turn this into a document?"
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Your assistant will take your thoughts and turn them into a written
+            draft.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            No blank pages. No pressure. Just real, flowing ideas.
+          </p>
+        </div>
 
-            <div className="bg-card border border-border/50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <span className="text-2xl">🧠</span>
-                How It Works
-              </h3>
-              <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                <li>Start a conversation in the assistant panel</li>
-                <li>Everything you interact with is automatically saved</li>
-                <li>The system learns your preferences and adapts</li>
-                <li>Your workspace evolves based on your usage</li>
-              </ol>
-            </div>
-
-            <div className="bg-card border border-border/50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <span className="text-2xl">🚀</span>
-                Ready to Begin?
-              </h3>
-              <p className="text-muted-foreground mb-4">
-                Click into the assistant panel on the right. Start with any
-                question or task. The interface will adapt to your needs as you
-                explore.
-              </p>
-              <div className="flex gap-3">
-                <Button variant="bordered" size="sm">
-                  View Documentation
-                </Button>
-                <Button variant="bordered" size="sm">
-                  Watch Tutorial
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 p-4 bg-primary/5 border border-primary/20 rounded-lg">
-            <p className="text-sm text-muted-foreground text-center">
-              This welcome content will be replaced with your actual workspace
-              once you start using the application.
+        {/* Footer */}
+        <div className="mt-8 pt-6 border-t border-border/30">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              size="sm"
+              onPress={() => setShowWelcome(false)}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              Hide Welcome Message
+            </Button>
+            <p className="text-xs text-muted-foreground">
+              Start typing here to respond to your assistant above
             </p>
           </div>
         </div>
