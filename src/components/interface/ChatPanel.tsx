@@ -3,7 +3,8 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { useState, useRef, useEffect } from "react";
-import { Send, Mic, Bot, User, MessageSquare, HelpCircle } from "lucide-react";
+import { Send, Mic, Bot, User } from "lucide-react";
+import { ChatHeader } from "./ChatHeader";
 
 interface Message {
   id: string;
@@ -79,33 +80,8 @@ export function ChatPanel() {
     <div className="w-full xl:w-[360px] h-full flex flex-col overflow-hidden">
       {/* Floating Chat Card */}
       <div className="h-full m-2 bg-background/95 backdrop-blur-sm rounded-2xl shadow-xl border border-border/30 flex flex-col overflow-hidden">
-        {/* Tab Header */}
-        <div className="flex-shrink-0 bg-card/95 backdrop-blur-sm border-b border-border/30 rounded-t-2xl">
-          <div className="flex">
-            <button
-              onClick={() => setActiveTab("write")}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 rounded-tl-2xl ${
-                activeTab === "write"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-              }`}
-            >
-              <MessageSquare className="w-4 h-4 inline mr-2" />
-              WRITE
-            </button>
-            <button
-              onClick={() => setActiveTab("support")}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 rounded-tr-2xl ${
-                activeTab === "support"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-              }`}
-            >
-              <HelpCircle className="w-4 h-4 inline mr-2" />
-              SUPPORT
-            </button>
-          </div>
-        </div>
+        {/* Chat Header */}
+        <ChatHeader activeTab={activeTab} onTabChange={setActiveTab} />
 
         {/* Chat Messages Area */}
         <div className="flex-1 flex flex-col min-h-0">
