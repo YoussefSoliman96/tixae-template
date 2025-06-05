@@ -2,6 +2,7 @@
 
 import { WelcomePanel } from "./WelcomePanel";
 import { ChatPanel } from "./ChatPanel";
+import { ControlPanel } from "./ControlPanel";
 
 export function MainInterface() {
   return (
@@ -12,9 +13,14 @@ export function MainInterface() {
         <div className="flex-1 min-h-0 flex flex-col">
           <WelcomePanel />
         </div>
+
+        {/* Control Panel Area - Fixed height */}
+        <div className="flex-shrink-0 w-full p-2">
+          <ControlPanel />
+        </div>
       </div>
 
-      {/* Right Panel - Control Panel */}
+      {/* Right Panel - Chat Panel */}
       <div className="lg:flex lg:w-1/3 xl:max-w-[360px]">
         <ChatPanel />
       </div>
