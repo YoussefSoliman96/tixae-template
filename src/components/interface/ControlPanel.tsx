@@ -33,18 +33,22 @@ export function ControlPanel() {
   };
 
   return (
-    <div className="w-full">
-      <div className="bg-card rounded-2xl shadow-xl border border-border/30 overflow-hidden">
+    <div className="w-full px-2">
+      <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-xl border border-border/30 overflow-hidden">
         {/* Content */}
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col lg:flex-row">
           {/* Left side - Controls */}
-          <div className="flex-1 p-2 md:p-3 space-y-2">
+          <div className="flex-1 p-3 lg:p-4 space-y-3">
             {/* Selectors Row */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-2">
               {/* Project Selector */}
               <Dropdown className="w-full sm:w-auto">
                 <DropdownTrigger>
-                  <Button variant="solid" size="sm" className="justify-between">
+                  <Button
+                    variant="solid"
+                    size="sm"
+                    className="justify-between bg-amber-500 text-amber-50 hover:bg-amber-600 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
                     <span>{selectedProject}</span>
                     <ChevronDown className="h-3 w-3 ml-1" />
                   </Button>
@@ -54,9 +58,15 @@ export function ControlPanel() {
                   onAction={(key) => setSelectedProject(key as string)}
                   selectedKeys={[selectedProject]}
                   selectionMode="single"
+                  className="bg-background/95 backdrop-blur-sm border border-border/30 rounded-lg shadow-xl"
                 >
                   {projects.map((project) => (
-                    <DropdownItem key={project}>{project}</DropdownItem>
+                    <DropdownItem
+                      key={project}
+                      className="hover:bg-amber-500/10"
+                    >
+                      {project}
+                    </DropdownItem>
                   ))}
                 </DropdownMenu>
               </Dropdown>
@@ -64,7 +74,11 @@ export function ControlPanel() {
               {/* Document Selector */}
               <Dropdown className="w-full sm:w-auto">
                 <DropdownTrigger>
-                  <Button variant="solid" size="sm" className="justify-between">
+                  <Button
+                    variant="solid"
+                    size="sm"
+                    className="justify-between bg-amber-500 text-amber-50 hover:bg-amber-600 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
                     <span>{selectedDocument}</span>
                     <ChevronDown className="h-3 w-3 ml-1" />
                   </Button>
@@ -74,9 +88,15 @@ export function ControlPanel() {
                   onAction={(key) => setSelectedDocument(key as string)}
                   selectedKeys={[selectedDocument]}
                   selectionMode="single"
+                  className="bg-background/95 backdrop-blur-sm border border-border/30 rounded-lg shadow-xl"
                 >
                   {documents.map((document) => (
-                    <DropdownItem key={document}>{document}</DropdownItem>
+                    <DropdownItem
+                      key={document}
+                      className="hover:bg-amber-500/10"
+                    >
+                      {document}
+                    </DropdownItem>
                   ))}
                 </DropdownMenu>
               </Dropdown>
@@ -84,7 +104,11 @@ export function ControlPanel() {
               {/* Version Selector */}
               <Dropdown className="w-full sm:w-auto">
                 <DropdownTrigger>
-                  <Button variant="solid" size="sm" className="justify-between">
+                  <Button
+                    variant="solid"
+                    size="sm"
+                    className="justify-between bg-amber-500 text-amber-50 hover:bg-amber-600 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
                     <span>{selectedVersion}</span>
                     <ChevronDown className="h-3 w-3 ml-1" />
                   </Button>
@@ -94,9 +118,15 @@ export function ControlPanel() {
                   onAction={(key) => setSelectedVersion(key as string)}
                   selectedKeys={[selectedVersion]}
                   selectionMode="single"
+                  className="bg-background/95 backdrop-blur-sm border border-border/30 rounded-lg shadow-xl"
                 >
                   {versions.map((version) => (
-                    <DropdownItem key={version}>{version}</DropdownItem>
+                    <DropdownItem
+                      key={version}
+                      className="hover:bg-amber-500/10"
+                    >
+                      {version}
+                    </DropdownItem>
                   ))}
                 </DropdownMenu>
               </Dropdown>
@@ -104,17 +134,29 @@ export function ControlPanel() {
 
             {/* Action Buttons Row */}
             <div className="flex flex-wrap gap-2">
-              <Button variant="solid" size="sm" className="gap-1">
+              <Button
+                variant="solid"
+                size="sm"
+                className="gap-1 bg-secondary/80 text-secondary-foreground hover:bg-secondary shadow-md hover:shadow-lg transition-all duration-200"
+              >
                 <Plus className="h-3 w-3" />
                 <span>New Project</span>
               </Button>
 
-              <Button variant="solid" size="sm" className="gap-1">
+              <Button
+                variant="solid"
+                size="sm"
+                className="gap-1 bg-secondary/80 text-secondary-foreground hover:bg-secondary shadow-md hover:shadow-lg transition-all duration-200"
+              >
                 <Plus className="h-3 w-3" />
                 <span>New Document</span>
               </Button>
 
-              <Button variant="solid" size="sm" className="gap-1">
+              <Button
+                variant="solid"
+                size="sm"
+                className="gap-1 bg-secondary/80 text-secondary-foreground hover:bg-secondary shadow-md hover:shadow-lg transition-all duration-200"
+              >
                 <Copy className="h-3 w-3" />
                 <span>Duplicate</span>
               </Button>
@@ -122,8 +164,8 @@ export function ControlPanel() {
           </div>
 
           {/* Right side - Quick Actions */}
-          <div className="p-2 md:p-3 border-t md:border-t-0 md:border-l border-border/30">
-            <div className="space-y-2">
+          <div className="p-3 lg:p-4 border-t lg:border-t-0 lg:border-l border-border/30 bg-card/50 backdrop-blur-sm lg:rounded-r-2xl">
+            <div className="space-y-3">
               <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 Quick Actions
               </h4>
@@ -135,7 +177,7 @@ export function ControlPanel() {
                       key={action.key}
                       variant="solid"
                       size="sm"
-                      className="text-xs h-8 gap-1"
+                      className="text-xs h-8 gap-1 bg-muted/60 text-foreground hover:bg-muted shadow-sm hover:shadow-md transition-all duration-200"
                       onPress={() => handleQuickAction(action.key)}
                     >
                       <Icon className="h-3 w-3" />
@@ -149,7 +191,7 @@ export function ControlPanel() {
               <Button
                 variant="solid"
                 size="sm"
-                className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-amber-50 shadow-lg hover:shadow-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-200"
               >
                 <Wand2 className="h-4 w-4 mr-2" />
                 Generate Content

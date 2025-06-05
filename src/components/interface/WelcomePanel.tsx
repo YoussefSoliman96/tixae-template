@@ -30,9 +30,9 @@ export function WelcomePanel() {
   }
 
   return (
-    <div className="h-full overflow-y-auto bg-background relative">
+    <div className="h-full overflow-y-auto bg-transparent relative">
       {/* Scroll indicator */}
-      <div className="absolute top-4 right-4 text-xs text-muted-foreground/60 bg-card/80 backdrop-blur-sm rounded px-2 py-1 border border-border/30">
+      <div className="absolute top-4 right-4 text-xs text-muted-foreground/60 bg-card/80 backdrop-blur-sm rounded px-2 py-1 border border-border/30 z-10">
         Scroll this area to view all content
       </div>
 
