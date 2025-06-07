@@ -202,78 +202,89 @@ Start typing to begin your creative journey...`);
   return (
     <>
       <ContentHeader onShowFAQ={() => setShowFAQ(true)} showFAQButton={true} />
-      <div className="flex-1 bg-card rounded-2xl shadow-xl p-4 md:p-6 overflow-y-auto">
-        <div className="max-w-none mx-auto h-full">
-          {/* Content Area */}
-          <div className="h-full flex flex-col">
-            {isEditing ? (
-              // Edit Mode
-              <>
-                <div className="flex-1 mb-4">
-                  <textarea
-                    ref={textareaRef}
-                    value={editingContent}
-                    onChange={(e) => setEditingContent(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="w-full h-full min-h-[400px] p-4 bg-background/50 border border-border/30 rounded-lg text-foreground placeholder-secondary-foreground/50 resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
-                    placeholder="Start writing your content..."
-                    style={{
-                      fontFamily: "inherit",
-                      fontSize: "16px",
-                      lineHeight: "1.6",
-                    }}
-                  />
-                </div>
+      <div className="flex-1 bg-card rounded-2xl shadow-xl flex flex-col">
+        <div className="flex-1 p-4 md:p-6">
+          <div className="max-w-none mx-auto h-full">
+            {/* Content Area */}
+            <div className="h-full flex flex-col">
+              {isEditing ? (
+                // Edit Mode
+                <>
+                  <div className="flex-1 mb-4">
+                    <textarea
+                      ref={textareaRef}
+                      value={editingContent}
+                      onChange={(e) => setEditingContent(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="w-full h-full min-h-[400px] p-4 bg-background/50 border border-border/30 rounded-lg text-foreground placeholder-secondary-foreground/50 resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+                      placeholder="Start writing your content..."
+                      style={{
+                        fontFamily: "inherit",
+                        fontSize: "16px",
+                        lineHeight: "1.6",
+                      }}
+                    />
+                  </div>
 
-                {/* Editing Controls */}
-                <div className="flex items-center justify-between pt-4 border-t border-border/30">
-                  <div className="text-sm text-secondary-foreground/70">
-                    {getWordCount(editingContent)} words
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={handleCancel}
-                      className="px-4 py-2 text-sm text-secondary-foreground/70 hover:text-secondary-foreground bg-secondary/20 hover:bg-secondary/30 rounded-lg transition-colors"
-                    >
-                      <X className="h-4 w-4 mr-1 inline" />
-                      Cancel
-                    </button>
-                    <button
-                      onClick={handleSave}
-                      className="px-4 py-2 text-sm text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg transition-colors"
-                    >
-                      <Save className="h-4 w-4 mr-1 inline" />
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              // View Mode
-              <div
-                onClick={handleStartEditing}
-                className="h-full cursor-text p-4 rounded-lg hover:bg-background/30 transition-colors group"
-              >
-                <div className="prose prose-gray max-w-none">
-                  {content.split("\n").map((line, index) => (
-                    <p
-                      key={index}
-                      className="text-foreground mb-4 last:mb-0 leading-relaxed"
-                    >
-                      {line}
-                    </p>
-                  ))}
-                </div>
-                {hasInteracted && (
-                  <div className="mt-6 pt-4 border-t border-border/30">
+                  {/* Editing Controls */}
+                  <div className="flex items-center justify-between">
                     <div className="text-sm text-secondary-foreground/70">
-                      {getWordCount(content)} words • Click to edit
+                      {getWordCount(editingContent)} words
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleCancel}
+                        className="px-4 py-2 text-sm text-secondary-foreground/70 hover:text-secondary-foreground bg-secondary/20 hover:bg-secondary/30 rounded-lg transition-colors"
+                      >
+                        <X className="h-4 w-4 mr-1 inline" />
+                        Cancel
+                      </button>
+                      <button
+                        onClick={handleSave}
+                        className="px-4 py-2 text-sm text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg transition-colors"
+                      >
+                        <Save className="h-4 w-4 mr-1 inline" />
+                        Save
+                      </button>
                     </div>
                   </div>
-                )}
-              </div>
-            )}
+                </>
+              ) : (
+                // View Mode
+                <div
+                  onClick={handleStartEditing}
+                  className="h-full cursor-text p-4 rounded-lg hover:bg-background/30 transition-colors group"
+                >
+                  <div className="prose prose-gray max-w-none">
+                    {content.split("\n").map((line, index) => (
+                      <p
+                        key={index}
+                        className="text-foregroundlast:mb-0 leading-relaxed"
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                  {hasInteracted && (
+                    <div className="">
+                      <div className="text-sm text-secondary-foreground/70">
+                        {getWordCount(content)} words • Click to edit
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
+        </div>
+
+        {/* Powered by section */}
+        <div className="flex items-center justify-center py-3">
+          <img
+            src="/Powered_by_Tixae.png"
+            alt="Powered by Tixae.ai"
+            className="h-4 opacity-70 hover:opacity-100 transition-opacity"
+          />
         </div>
       </div>
     </>

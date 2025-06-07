@@ -287,8 +287,12 @@ export function ChatPanel() {
               </form>
 
               {/* Powered by section */}
-              <div className="flex items-center justify-center pt-2 text-xs text-muted-foreground/70">
-                <span>Powered by Tixae</span>
+              <div className="flex items-center justify-center pt-2">
+                <img
+                  src="/Powered_by_Tixae.png"
+                  alt="Powered by Tixae.ai"
+                  className="h-4 opacity-70 hover:opacity-100 transition-opacity"
+                />
               </div>
             </div>
           )}

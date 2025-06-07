@@ -44,14 +44,7 @@ export default function Navbar() {
         {/* Logo - Far Left */}
         <div className="flex-shrink-0">
           <Link href="/">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">
-                  T
-                </span>
-              </div>
-              <span className="font-bold text-xl">Tixae</span>
-            </div>
+            <Image src="/logo.png" alt="Tixae Logo" width={150} height={150} />
           </Link>
         </div>
 
