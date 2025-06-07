@@ -13,9 +13,9 @@
     --card-foreground: 245 84% 11%; /* Black */
     --popover: 0 0% 100%; /* White */
     --popover-foreground: 245 84% 11%; /* Black */
-    --primary: 270 100% 49%; /* Bright Purple #9A00F7 */
+    --primary: 263 58% 25%; /* Dark Purple #421566 */
     --primary-foreground: 0 0% 100%; /* White */
-    --secondary: 263 58% 25%; /* Dark Purple #421566 */
+    --secondary: 338 48% 59%; /* Peach #D46686 */
     --secondary-foreground: 0 0% 100%; /* White */
     --muted: 0 0% 96%; /* Light Gray */
     --muted-foreground: 220 13% 46%; /* Medium Gray */
@@ -37,9 +37,9 @@
     --card-foreground: 0 0% 100%; /* White */
     --popover: 263 58% 25%; /* Dark Purple */
     --popover-foreground: 0 0% 100%; /* White */
-    --primary: 270 100% 49%; /* Bright Purple #9A00F7 */
+    --primary: 263 58% 25%; /* Dark Purple #421566 */
     --primary-foreground: 0 0% 100%; /* White */
-    --secondary: 255 100% 40%; /* Deep Purple #490CBA */
+    --secondary: 338 48% 59%; /* Peach #D46686 */
     --secondary-foreground: 0 0% 100%; /* White */
     --muted: 263 58% 25%; /* Dark Purple */
     --muted-foreground: 220 13% 65%; /* Light Gray */
@@ -59,8 +59,8 @@
   }
   body {
     @apply bg-background text-foreground font-body;
-    font-family: "Figtree", system-ui, sans-serif;
-    font-weight: 300; /* Figtree Light 300 for body text */
+    font-family: "Avenir", "Figtree", system-ui, sans-serif;
+    font-weight: 400; /* Avenir Book for body text */
   }
 
   h1,
@@ -69,8 +69,8 @@
   h4,
   h5,
   h6 {
-    font-family: "Figtree", system-ui, sans-serif;
-    font-weight: 500; /* Figtree Medium 500 for headings */
+    font-family: "Avenir", "Figtree", system-ui, sans-serif;
+    font-weight: 500; /* Avenir Medium for headings */
   }
 }
 

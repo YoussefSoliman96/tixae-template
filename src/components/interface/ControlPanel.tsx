@@ -184,7 +184,7 @@ export function ControlPanel() {
                 className="w-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/80 transition-all duration-200"
               >
                 <Wand2 className="h-4 w-4 mr-2" />
-                Generate Content
+                Main tool
               </Button>
             </div>
           </div>

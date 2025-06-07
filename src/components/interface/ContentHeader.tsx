@@ -13,11 +13,11 @@ export function ContentHeader({
   showFAQButton = false,
 }: ContentHeaderProps) {
   return (
-    <div className="bg-secondary text-secondary-foreground p-4 md:p-5 flex items-center justify-between border-b border-border/30">
+    <div className="bg-primary text-primary-foreground p-4 md:p-5 flex items-center justify-between border-b border-border/30">
       <div className="flex items-center gap-2 w-full sm:w-auto">
         {/* Book > Chapter > Version breadcrumb */}
         <div className="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-secondary-foreground/70">
-          <span className="hover:text-primary cursor-pointer transition-colors">
+          <span className="hover:text-primary-foreground cursor-pointer transition-colors">
             Project Name
           </span>
           <span className="text-border shrink-0">•</span>
@@ -25,7 +25,7 @@ export function ContentHeader({
             Chapter 1 - Introduction
           </span>
           <span className="text-border shrink-0">•</span>
-          <span className="text-primary brightness-125 hover:text-primary/80 cursor-pointer transition-colors">
+          <span className="text-primary-foreground brightness-125 hover:text-primary-foreground/80 cursor-pointer transition-colors">
             Version 1
           </span>
         </div>

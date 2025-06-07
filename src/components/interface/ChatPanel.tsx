@@ -91,12 +91,12 @@ export function ChatPanel() {
       <div className="flex-1 flex flex-col min-h-0">
         <div className="h-full bg-card rounded-2xl shadow-xl overflow-hidden flex flex-col">
           {/* WRITE | SUPPORT Header */}
-          <div className="bg-secondary text-secondary-foreground py-4 md:p-5 flex items-center justify-between border-b border-border/30">
+          <div className="bg-primary text-primary-foreground py-4 md:p-5 flex items-center justify-between border-b border-border/30">
             <div className="flex bg-background rounded-md overflow-hidden border border-border/50 shadow-sm">
               <button
                 className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                   activeTab === "write"
-                    ? "bg-primary text-primary-foreground shadow-sm"
+                    ? "bg-secondary text-secondary-foreground shadow-sm"
                     : "bg-background text-foreground hover:bg-secondary/60"
                 }`}
                 onClick={() => setActiveTab("write")}
@@ -106,7 +106,7 @@ export function ChatPanel() {
               <button
                 className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                   activeTab === "support"
-                    ? "bg-primary text-primary-foreground shadow-sm"
+                    ? "bg-secondary text-secondary-foreground shadow-sm"
                     : "bg-background text-foreground hover:bg-secondary/60"
                 }`}
                 onClick={() => setActiveTab("support")}
@@ -121,7 +121,7 @@ export function ChatPanel() {
                 <button
                   className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                     chatMode === "text"
-                      ? "bg-primary text-primary-foreground shadow-sm"
+                      ? "bg-secondary text-secondary-foreground shadow-sm"
                       : "bg-background text-foreground hover:bg-secondary/60"
                   }`}
                   onClick={() => setChatMode("text")}
@@ -131,7 +131,7 @@ export function ChatPanel() {
                 <button
                   className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                     chatMode === "voice"
-                      ? "bg-primary text-primary-foreground shadow-sm"
+                      ? "bg-secondary text-secondary-foreground shadow-sm"
                       : "bg-background text-foreground hover:bg-secondary/60"
                   }`}
                   onClick={() => setChatMode("voice")}
