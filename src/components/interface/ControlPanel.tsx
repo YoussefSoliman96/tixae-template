@@ -8,7 +8,7 @@ import {
   DropdownItem,
 } from "@heroui/react";
 import { useState } from "react";
-import { Plus, Copy, ChevronDown, Wand2, FileText, Zap } from "lucide-react";
+import { Plus, Copy, ChevronDown, Wand2 } from "lucide-react";
 
 export function ControlPanel() {
   const [selectedProject, setSelectedProject] = useState("Project 1");
@@ -20,16 +20,16 @@ export function ControlPanel() {
   const documents = ["Document 1", "Document 2", "Document 3"];
   const versions = ["Version 1", "Version 2", "Version 3"];
 
-  const quickActions = [
-    { key: "expand", text: "Expand Text", icon: Wand2 },
-    { key: "summarize", text: "Summarize", icon: FileText },
-    { key: "generate", text: "Generate Ideas", icon: Zap },
-    { key: "improve", text: "Improve Writing", icon: Wand2 },
+  const tools = [
+    { key: "tool1", text: "Tool 1" },
+    { key: "tool2", text: "Tool 2" },
+    { key: "tool3", text: "Tool 3" },
+    { key: "tool4", text: "Tool 4" },
   ];
 
-  const handleQuickAction = (action: string) => {
-    console.log("Quick action:", action);
-    // Implement your quick action logic here
+  const handleToolAction = (tool: string) => {
+    console.log("Tool action:", tool);
+    // Implement your tool logic here
   };
 
   return (
@@ -47,7 +47,7 @@ export function ControlPanel() {
                   <Button
                     variant="solid"
                     size="sm"
-                    className="justify-between bg-amber-500 text-amber-50 hover:bg-amber-600 shadow-md hover:shadow-lg transition-all duration-200"
+                    className="justify-between bg-primary text-primary-foreground hover:bg-primary/80 shadow-md hover:shadow-lg transition-all duration-200"
                   >
                     <span>{selectedProject}</span>
                     <ChevronDown className="h-3 w-3 ml-1" />
@@ -61,10 +61,7 @@ export function ControlPanel() {
                   className="bg-background/95 backdrop-blur-sm border border-border/30 rounded-lg shadow-xl"
                 >
                   {projects.map((project) => (
-                    <DropdownItem
-                      key={project}
-                      className="hover:bg-amber-500/10"
-                    >
+                    <DropdownItem key={project} className="hover:bg-primary/10">
                       {project}
                     </DropdownItem>
                   ))}
@@ -77,7 +74,7 @@ export function ControlPanel() {
                   <Button
                     variant="solid"
                     size="sm"
-                    className="justify-between bg-amber-500 text-amber-50 hover:bg-amber-600 shadow-md hover:shadow-lg transition-all duration-200"
+                    className="justify-between bg-primary text-primary-foreground hover:bg-primary/80 shadow-md hover:shadow-lg transition-all duration-200"
                   >
                     <span>{selectedDocument}</span>
                     <ChevronDown className="h-3 w-3 ml-1" />
@@ -93,7 +90,7 @@ export function ControlPanel() {
                   {documents.map((document) => (
                     <DropdownItem
                       key={document}
-                      className="hover:bg-amber-500/10"
+                      className="hover:bg-primary/10"
                     >
                       {document}
                     </DropdownItem>
@@ -107,7 +104,7 @@ export function ControlPanel() {
                   <Button
                     variant="solid"
                     size="sm"
-                    className="justify-between bg-amber-500 text-amber-50 hover:bg-amber-600 shadow-md hover:shadow-lg transition-all duration-200"
+                    className="justify-between bg-primary text-primary-foreground hover:bg-primary/80 shadow-md hover:shadow-lg transition-all duration-200"
                   >
                     <span>{selectedVersion}</span>
                     <ChevronDown className="h-3 w-3 ml-1" />
@@ -121,10 +118,7 @@ export function ControlPanel() {
                   className="bg-background/95 backdrop-blur-sm border border-border/30 rounded-lg shadow-xl"
                 >
                   {versions.map((version) => (
-                    <DropdownItem
-                      key={version}
-                      className="hover:bg-amber-500/10"
-                    >
+                    <DropdownItem key={version} className="hover:bg-primary/10">
                       {version}
                     </DropdownItem>
                   ))}
@@ -137,7 +131,7 @@ export function ControlPanel() {
               <Button
                 variant="solid"
                 size="sm"
-                className="gap-1 bg-secondary/80 text-secondary-foreground hover:bg-secondary shadow-md hover:shadow-lg transition-all duration-200"
+                className="gap-1 bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-md hover:shadow-lg transition-all duration-200"
               >
                 <Plus className="h-3 w-3" />
                 <span>New Project</span>
@@ -146,7 +140,7 @@ export function ControlPanel() {
               <Button
                 variant="solid"
                 size="sm"
-                className="gap-1 bg-secondary/80 text-secondary-foreground hover:bg-secondary shadow-md hover:shadow-lg transition-all duration-200"
+                className="gap-1 bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-md hover:shadow-lg transition-all duration-200"
               >
                 <Plus className="h-3 w-3" />
                 <span>New Document</span>
@@ -155,7 +149,7 @@ export function ControlPanel() {
               <Button
                 variant="solid"
                 size="sm"
-                className="gap-1 bg-secondary/80 text-secondary-foreground hover:bg-secondary shadow-md hover:shadow-lg transition-all duration-200"
+                className="gap-1 bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-md hover:shadow-lg transition-all duration-200"
               >
                 <Copy className="h-3 w-3" />
                 <span>Duplicate</span>
@@ -163,35 +157,31 @@ export function ControlPanel() {
             </div>
           </div>
 
-          {/* Right side - Quick Actions */}
+          {/* Right side - Tools */}
           <div className="p-3 lg:p-4 border-t lg:border-t-0 lg:border-l border-border/30 bg-card/50 backdrop-blur-sm lg:rounded-r-2xl">
             <div className="space-y-3">
               <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Quick Actions
+                Tools
               </h4>
               <div className="grid grid-cols-2 gap-2">
-                {quickActions.map((action) => {
-                  const Icon = action.icon;
-                  return (
-                    <Button
-                      key={action.key}
-                      variant="solid"
-                      size="sm"
-                      className="text-xs h-8 gap-1 bg-muted/60 text-foreground hover:bg-muted shadow-sm hover:shadow-md transition-all duration-200"
-                      onPress={() => handleQuickAction(action.key)}
-                    >
-                      <Icon className="h-3 w-3" />
-                      <span className="hidden sm:inline">{action.text}</span>
-                    </Button>
-                  );
-                })}
+                {tools.map((tool) => (
+                  <Button
+                    key={tool.key}
+                    variant="solid"
+                    size="sm"
+                    className="text-xs h-8 bg-secondary/60 text-secondary-foreground hover:bg-secondary shadow-sm hover:shadow-md transition-all duration-200"
+                    onPress={() => handleToolAction(tool.key)}
+                  >
+                    <span>{tool.text}</span>
+                  </Button>
+                ))}
               </div>
 
               {/* Generate Button */}
               <Button
                 variant="solid"
                 size="sm"
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-amber-50 shadow-lg hover:shadow-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-200"
+                className="w-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/80 transition-all duration-200"
               >
                 <Wand2 className="h-4 w-4 mr-2" />
                 Generate Content
