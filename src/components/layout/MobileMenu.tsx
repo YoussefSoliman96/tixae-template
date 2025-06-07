@@ -1,5 +1,7 @@
 "use client";
 
+import { ThemeToggle } from "../common/ThemeToggle";
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -51,6 +53,16 @@ export function MobileMenu({
               </a>
             ))}
           </nav>
+
+          {/* Theme Toggle for Mobile */}
+          <div className="mt-6 pt-4 border-t border-border">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-muted-foreground">
+                Theme
+              </span>
+              <ThemeToggle />
+            </div>
+          </div>
         </div>
       </div>
     </div>

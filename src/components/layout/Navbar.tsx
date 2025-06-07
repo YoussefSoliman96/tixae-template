@@ -8,6 +8,7 @@ import { useState } from "react";
 import { NavLink } from "./NavLink";
 import { MobileMenu } from "./MobileMenu";
 import { UserMenu } from "./UserMenu";
+import { ThemeToggle } from "../common/ThemeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -101,6 +102,9 @@ export default function Navbar() {
               </svg>
             </div>
           </div>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {/* User Menu */}
           <UserMenu />
