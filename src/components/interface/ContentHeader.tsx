@@ -1,9 +1,17 @@
 "use client";
 
-import { BookOpen, Edit, Search } from "lucide-react";
+import { BookOpen, Edit, Search, HelpCircle } from "lucide-react";
 import { Button } from "@heroui/button";
 
-export function ContentHeader() {
+interface ContentHeaderProps {
+  onShowFAQ?: () => void;
+  showFAQButton?: boolean;
+}
+
+export function ContentHeader({
+  onShowFAQ,
+  showFAQButton = false,
+}: ContentHeaderProps) {
   return (
     <div className="bg-secondary text-secondary-foreground p-3 md:p-4 flex flex-col sm:flex-row sm:items-center justify-between border-b border-border/30 gap-2 sm:gap-0">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-2 w-full sm:w-auto">
@@ -33,6 +41,17 @@ export function ContentHeader() {
 
       {/* Action buttons */}
       <div className="hidden sm:flex items-center gap-2">
+        {showFAQButton && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onShowFAQ}
+            className="text-secondary-foreground/70 hover:text-secondary-foreground hover:bg-secondary/50 h-8 px-3"
+          >
+            <HelpCircle className="h-4 w-4 mr-1" />
+            FAQ
+          </Button>
+        )}
         <Button
           variant="ghost"
           size="sm"

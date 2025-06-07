@@ -1,44 +1,86 @@
 "use client";
 
-import { Button } from "@heroui/button";
 import { useState, useRef, useEffect } from "react";
-import { HelpCircle, Edit3, Eye, Save, X } from "lucide-react";
+import { Save, X } from "lucide-react";
 import { ContentHeader } from "./ContentHeader";
 
 export function WelcomePanel() {
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [content, setContent] = useState(`Welcome to Your Creative Workspace
+
+This is where your ideas come to life. Click anywhere to start writing your thoughts, stories, or any content you wish to create.
+
+Some features you might find helpful:
+• Auto-save functionality
+• Clean, distraction-free interface
+• Word count tracking
+• Easy editing and formatting
+
+Start typing to begin your creative journey...`);
+
   const [isEditing, setIsEditing] = useState(false);
-  const [content, setContent] = useState("");
   const [editingContent, setEditingContent] = useState("");
+  const [showFAQ, setShowFAQ] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-focus textarea when entering edit mode
+  // Get word count
+  const getWordCount = (text: string) => {
+    return text.trim() ? text.trim().split(/\s+/).length : 0;
+  };
+
+  // Auto-resize textarea
   useEffect(() => {
-    if (isEditing && textareaRef.current) {
-      textareaRef.current.focus();
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
     }
-  }, [isEditing]);
+  }, [editingContent]);
 
   const handleStartEditing = () => {
     setEditingContent(content);
     setIsEditing(true);
+    setHasInteracted(true);
+
+    setTimeout(() => {
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+        textareaRef.current.setSelectionRange(
+          textareaRef.current.value.length,
+          textareaRef.current.value.length
+        );
+      }
+    }, 50);
   };
 
-  const handleSaveEdit = () => {
-    setContent(editingContent);
+  const handleSave = () => {
+    if (editingContent.trim()) {
+      setContent(editingContent);
+    }
     setIsEditing(false);
   };
 
-  const handleCancelEdit = () => {
+  const handleCancel = () => {
     setEditingContent(content);
     setIsEditing(false);
   };
 
-  // Welcome screen content
-  if (showWelcome) {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      handleCancel();
+    } else if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      handleSave();
+    }
+  };
+
+  if (showFAQ) {
     return (
-      <div className="flex flex-col h-full">
-        <ContentHeader />
+      <>
+        <ContentHeader
+          onShowFAQ={() => setShowFAQ(false)}
+          showFAQButton={true}
+        />
         <div className="flex-1 overflow-y-auto bg-transparent relative">
           {/* Scroll indicator */}
           <div className="absolute top-4 right-4 text-xs text-muted-foreground/60 bg-card/80 backdrop-blur-sm rounded px-2 py-1 border border-border/30 z-10">
@@ -72,8 +114,8 @@ export function WelcomePanel() {
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 This screen is your starting point. You can always return here
-                by clicking the "<strong>Show Welcome & FAQ</strong>" button in
-                the blue bar above.
+                by clicking the "<strong>FAQ</strong>" button in the blue bar
+                above.
               </p>
             </div>
 
@@ -140,14 +182,12 @@ export function WelcomePanel() {
             {/* Footer */}
             <div className="mt-8 pt-6 border-t border-border/30">
               <div className="flex items-center justify-between">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onPress={() => setShowWelcome(false)}
-                  className="text-muted-foreground hover:text-foreground"
+                <button
+                  onClick={() => setShowFAQ(false)}
+                  className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-secondary/20 transition-colors text-sm"
                 >
                   Hide Welcome Message
-                </Button>
+                </button>
                 <p className="text-xs text-muted-foreground">
                   Start typing here to respond to your assistant above
                 </p>
@@ -155,131 +195,87 @@ export function WelcomePanel() {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
-  // Main content editor
   return (
-    <div className="flex flex-col h-full">
-      <ContentHeader />
-      <div className="flex-1 p-2 bg-secondary/5 min-h-0 flex flex-col">
-        <div className="flex-1 bg-card rounded-2xl shadow-xl border border-border/30 overflow-hidden flex flex-col">
-          {/* Header with Project Info and Controls */}
-          <div className="bg-secondary text-secondary-foreground p-3 md:p-4 flex items-center justify-between border-b border-border/30">
-            <div className="flex items-center gap-3">
-              <div className="text-sm font-medium">
-                {isEditing ? "Editing Document" : "Document View"}
-              </div>
-              {content && !isEditing && (
-                <div className="text-xs text-secondary-foreground/70">
-                  {content.split(" ").length} words
-                </div>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              {!isEditing ? (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onPress={() => setShowWelcome(true)}
-                    className="text-xs px-2 py-1 h-auto text-secondary-foreground hover:bg-secondary-foreground/10"
-                  >
-                    <HelpCircle className="w-3 h-3 mr-1" />
-                    FAQ
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onPress={handleStartEditing}
-                    className="text-xs px-2 py-1 h-auto text-secondary-foreground hover:bg-secondary-foreground/10"
-                  >
-                    <Edit3 className="w-3 h-3 mr-1" />
-                    Edit
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onPress={handleCancelEdit}
-                    className="text-xs px-2 py-1 h-auto text-secondary-foreground hover:bg-secondary-foreground/10"
-                  >
-                    <X className="w-3 h-3 mr-1" />
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="solid"
-                    size="sm"
-                    onPress={handleSaveEdit}
-                    className="text-xs px-2 py-1 h-auto bg-primary text-primary-foreground hover:bg-primary/80"
-                    disabled={editingContent === content}
-                  >
-                    <Save className="w-3 h-3 mr-1" />
-                    Save
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-
+    <>
+      <ContentHeader onShowFAQ={() => setShowFAQ(true)} showFAQButton={true} />
+      <div className="flex-1 bg-card rounded-2xl shadow-xl p-4 md:p-6 overflow-y-auto">
+        <div className="max-w-none mx-auto h-full">
           {/* Content Area */}
-          <div className="flex-1 p-3 md:p-4 relative min-h-0">
+          <div className="h-full flex flex-col">
             {isEditing ? (
               // Edit Mode
-              <div className="h-full flex flex-col">
-                <textarea
-                  ref={textareaRef}
-                  value={editingContent}
-                  onChange={(e) => setEditingContent(e.target.value)}
-                  className="flex-1 w-full p-3 md:p-4 bg-background/60 border border-border/30 rounded-xl resize-none text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 shadow-sm backdrop-blur-sm transition-all duration-200"
-                  placeholder="Start writing your content here..."
-                />
-              </div>
-            ) : content ? (
-              // View Mode with Content
-              <div
-                className="w-full h-full bg-background/40 border border-border/20 rounded-xl cursor-text hover:bg-background/60 hover:border-border/40 transition-all duration-200 overflow-auto shadow-sm backdrop-blur-sm p-3 md:p-4"
-                onClick={handleStartEditing}
-              >
-                <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                  {content}
+              <>
+                <div className="flex-1 mb-4">
+                  <textarea
+                    ref={textareaRef}
+                    value={editingContent}
+                    onChange={(e) => setEditingContent(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="w-full h-full min-h-[400px] p-4 bg-background/50 border border-border/30 rounded-lg text-foreground placeholder-secondary-foreground/50 resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-colors"
+                    placeholder="Start writing your content..."
+                    style={{
+                      fontFamily: "inherit",
+                      fontSize: "16px",
+                      lineHeight: "1.6",
+                    }}
+                  />
                 </div>
-              </div>
+
+                {/* Editing Controls */}
+                <div className="flex items-center justify-between pt-4 border-t border-border/30">
+                  <div className="text-sm text-secondary-foreground/70">
+                    {getWordCount(editingContent)} words
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleCancel}
+                      className="px-4 py-2 text-sm text-secondary-foreground/70 hover:text-secondary-foreground bg-secondary/20 hover:bg-secondary/30 rounded-lg transition-colors"
+                    >
+                      <X className="h-4 w-4 mr-1 inline" />
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSave}
+                      className="px-4 py-2 text-sm text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg transition-colors"
+                    >
+                      <Save className="h-4 w-4 mr-1 inline" />
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </>
             ) : (
-              // Empty State
+              // View Mode
               <div
-                className="w-full h-full bg-background/40 border border-border/20 rounded-xl cursor-text hover:bg-background/60 hover:border-border/40 transition-all duration-200 overflow-auto shadow-sm backdrop-blur-sm flex items-center justify-center"
                 onClick={handleStartEditing}
+                className="h-full cursor-text p-4 rounded-lg hover:bg-background/30 transition-colors group"
               >
-                <div className="text-center text-muted-foreground">
-                  <Edit3 className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <h3 className="text-lg font-semibold mb-2">Start Writing</h3>
-                  <p className="text-sm mb-4 max-w-md">
-                    Click here to start creating your content. You can write,
-                    edit, and save your work.
-                  </p>
-                  <Button
-                    variant="ghost"
-                    onPress={handleStartEditing}
-                    className="gap-2"
-                  >
-                    <Edit3 className="h-4 w-4" />
-                    Start Writing
-                  </Button>
+                <div className="prose prose-gray max-w-none">
+                  {content.split("\n").map((line, index) => (
+                    <p
+                      key={index}
+                      className="text-foreground mb-4 last:mb-0 leading-relaxed"
+                    >
+                      {line}
+                    </p>
+                  ))}
                 </div>
+                {hasInteracted && (
+                  <div className="mt-6 pt-4 border-t border-border/30">
+                    <div className="text-sm text-secondary-foreground/70">
+                      {getWordCount(content)} words • Click to edit
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
-
-          {/* Powered by section */}
-          <div className="flex items-center justify-center py-2 text-xs text-muted-foreground/70 border-t border-border/20">
-            <span>Powered by Tixae</span>
-          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
