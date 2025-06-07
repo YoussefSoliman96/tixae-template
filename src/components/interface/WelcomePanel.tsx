@@ -8,15 +8,8 @@ export function WelcomePanel() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [content, setContent] = useState(`Welcome to Your Creative Workspace
 
-This is where your ideas come to life. Click anywhere to start writing your thoughts, stories, or any content you wish to create.
-
-Some features you might find helpful:
-• Auto-save functionality
-• Clean, distraction-free interface
-• Word count tracking
-• Easy editing and formatting
-
-Start typing to begin your creative journey...`);
+Click anywhere to start writing your thoughts, stories, or any content you wish to create.
+`);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editingContent, setEditingContent] = useState("");
