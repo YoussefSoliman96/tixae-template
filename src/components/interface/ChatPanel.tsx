@@ -91,29 +91,27 @@ export function ChatPanel() {
       <div className="flex-1 flex flex-col min-h-0">
         <div className="h-full bg-card rounded-2xl shadow-xl overflow-hidden flex flex-col">
           {/* WRITE | SUPPORT Header */}
-          <div className="bg-secondary text-secondary-foreground p-3 md:p-4 flex items-center justify-between border-b border-border/30">
+          <div className="bg-secondary text-secondary-foreground py-4 md:p-5 flex items-center justify-between border-b border-border/30">
             <div className="flex bg-background rounded-md overflow-hidden border border-border/50 shadow-sm">
               <button
-                className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                   activeTab === "write"
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "bg-background text-foreground hover:bg-secondary/60"
                 }`}
                 onClick={() => setActiveTab("write")}
               >
-                <MessageSquare className="w-3 h-3 inline mr-1" />
-                WRITE
+                Write
               </button>
               <button
-                className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                   activeTab === "support"
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "bg-background text-foreground hover:bg-secondary/60"
                 }`}
                 onClick={() => setActiveTab("support")}
               >
-                <HelpCircle className="w-3 h-3 inline mr-1" />
-                SUPPORT
+                Support
               </button>
             </div>
 
@@ -121,24 +119,24 @@ export function ChatPanel() {
             {activeTab === "write" && (
               <div className="flex bg-background rounded-md overflow-hidden border border-border/50 shadow-sm">
                 <button
-                  className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                  className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                     chatMode === "text"
                       ? "bg-primary text-primary-foreground shadow-sm"
                       : "bg-background text-foreground hover:bg-secondary/60"
                   }`}
                   onClick={() => setChatMode("text")}
                 >
-                  TYPE
+                  Type
                 </button>
                 <button
-                  className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                  className={`px-3 h-8 text-xs font-medium transition-all duration-200 ${
                     chatMode === "voice"
                       ? "bg-primary text-primary-foreground shadow-sm"
                       : "bg-background text-foreground hover:bg-secondary/60"
                   }`}
                   onClick={() => setChatMode("voice")}
                 >
-                  SPEAK
+                  Speak
                 </button>
               </div>
             )}
