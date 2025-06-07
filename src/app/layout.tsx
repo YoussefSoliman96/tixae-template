@@ -17,6 +17,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Tixae Template",
   description: "A modern Next.js template with beautiful layouts.",
+  icons: {
+    icon: "/tixae-logo.png",
+  },
 };
 
 export default function RootLayout({
