@@ -11,7 +11,7 @@ interface NavLinkProps {
 
 export function NavLink({ href, label, isActive, isExternal }: NavLinkProps) {
   const baseClasses =
-    "px-4 py-2 text-sm text-primary rounded-lg transition-all duration-200";
+    "px-4 py-2 text-sm text-primary font-medium rounded-lg transition-all duration-200";
   const activeClasses = isActive
     ? "bg-primary text-primary-foreground shadow-sm"
     : "text-muted-foreground hover:text-foreground hover:bg-secondary/60";

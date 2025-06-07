@@ -21,10 +21,10 @@ export function ControlPanel() {
   const versions = ["Version 1", "Version 2", "Version 3"];
 
   const tools = [
-    { key: "tool1", text: "Tool 1" },
-    { key: "tool2", text: "Tool 2" },
-    { key: "tool3", text: "Tool 3" },
-    { key: "tool4", text: "Tool 4" },
+    { key: "tool1", text: "Secondary tool 1" },
+    { key: "tool2", text: "Secondary tool 2" },
+    { key: "tool3", text: "Secondary tool 3" },
+    { key: "tool4", text: "Secondary tool 4" },
   ];
 
   const handleToolAction = (tool: string) => {
@@ -158,11 +158,16 @@ export function ControlPanel() {
           </div>
 
           {/* Right side - Tools */}
-          <div className="p-3 lg:p-4 border-t lg:border-t-0 lg:border-l border-border/30 bg-card/50 backdrop-blur-sm lg:rounded-r-2xl">
+          <div className="p-3 lg:p-4 border-t lg:border-t-0 bg-card/50 backdrop-blur-sm lg:rounded-r-2xl">
             <div className="space-y-3">
-              <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Tools
-              </h4>
+              <Button
+                variant="solid"
+                size="sm"
+                className="w-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/80 transition-all duration-200"
+              >
+                <Wand2 className="h-4 w-4 mr-2" />
+                Main tool
+              </Button>
               <div className="grid grid-cols-2 gap-2">
                 {tools.map((tool) => (
                   <Button
@@ -178,14 +183,6 @@ export function ControlPanel() {
               </div>
 
               {/* Generate Button */}
-              <Button
-                variant="solid"
-                size="sm"
-                className="w-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/80 transition-all duration-200"
-              >
-                <Wand2 className="h-4 w-4 mr-2" />
-                Main tool
-              </Button>
             </div>
           </div>
         </div>

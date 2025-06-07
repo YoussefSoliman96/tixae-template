@@ -38,6 +38,12 @@ export default function Navbar() {
     },
   ];
 
+  const languageOptions = [
+    { value: "en", label: "ENGLISH" },
+    { value: "es", label: "ESPAÑOL" },
+    { value: "fr", label: "FRANÇAIS" },
+  ];
+
   return (
     <header className="w-full h-[80px] flex items-center justify-center bg-background border-b border-border/50">
       <div className="w-full max-w-[1440px] flex items-center justify-between px-4">
@@ -74,10 +80,16 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
           {/* Language Selector */}
           <div className="relative">
-            <select className="appearance-none bg-transparent text-sm font-medium text-muted-foreground hover:text-foreground cursor-pointer pr-4">
-              <option value="en">ENGLISH</option>
-              <option value="es">ESPAÑOL</option>
-              <option value="fr">FRANÇAIS</option>
+            <select className="appearance-none bg-transparent text-sm font-medium text-primary hover:text-foreground cursor-pointer px-2">
+              {languageOptions.map((option) => (
+                <option
+                  key={option.value}
+                  value={option.value}
+                  className="text-primary p-1"
+                >
+                  {option.label}
+                </option>
+              ))}
             </select>
             <div className="absolute right-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
               <svg
@@ -97,7 +109,7 @@ export default function Navbar() {
           </div>
 
           {/* Theme Toggle */}
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
 
           {/* User Menu */}
           <UserMenu />
