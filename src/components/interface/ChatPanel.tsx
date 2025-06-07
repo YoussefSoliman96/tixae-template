@@ -1,70 +1,79 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { useState, useRef, useEffect } from "react";
-import { Send, Mic, Bot, User } from "lucide-react";
-import { ChatHeader } from "./ChatHeader";
+import { MessageSquare, HelpCircle, Send } from "lucide-react";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
-  timestamp: Date;
 }
 
 export function ChatPanel() {
+  const [activeTab, setActiveTab] = useState<"write" | "support">("write");
+  const [chatMode, setChatMode] = useState<"text" | "voice">("text");
+  const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       role: "assistant",
       content:
-        "Hello User! Welcome to Tixae, your personal writing assistant. How can I help you get started with your project today?",
-      timestamp: new Date(),
+        "Hello! I'm here to help you with your writing. What would you like to work on today?",
     },
   ]);
-  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"write" | "support">("write");
   const [showWelcomeFAQ, setShowWelcomeFAQ] = useState(true);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Auto-resize textarea
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      const newHeight = Math.min(Math.max(textarea.scrollHeight, 79), 200);
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [input]);
+
+  // Auto-scroll to bottom
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
+      }
+    }, 0);
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages.length]);
 
-  const handleSend = async () => {
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage: Message = {
+    const newMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: input,
-      timestamp: new Date(),
+      content: input.trim(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setInput("");
     setIsLoading(true);
 
-    // Auto-close FAQ when user sends a message
-    if (showWelcomeFAQ) {
-      setShowWelcomeFAQ(false);
-    }
-
-    // Simulate assistant response
+    // Simulate AI response
     setTimeout(() => {
-      const assistantMessage: Message = {
+      const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `I received your message: "${userMessage.content}". I'm here to help you create amazing content. What would you like to work on together?`,
-        timestamp: new Date(),
+        content:
+          "Thanks for your message! I'm here to help you with your writing projects.",
       };
-      setMessages((prev) => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, aiResponse]);
       setIsLoading(false);
     }, 1000);
   };
@@ -72,21 +81,75 @@ export function ChatPanel() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      handleSendMessage(e);
     }
   };
 
   return (
-    <div className="w-full xl:w-[360px] h-full flex flex-col overflow-hidden">
-      {/* Floating Chat Card */}
-      <div className="h-full m-2 bg-background/95 backdrop-blur-sm rounded-2xl shadow-xl border border-border/30 flex flex-col overflow-hidden">
-        {/* Chat Header */}
-        <ChatHeader activeTab={activeTab} onTabChange={setActiveTab} />
+    <div className="w-full xl:w-[360px] h-full flex flex-col overflow-hidden rounded-2xl shadow-xl">
+      {/* Chat Messages Area with Header */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="h-full bg-card rounded-2xl shadow-xl overflow-hidden flex flex-col">
+          {/* WRITE | SUPPORT Header */}
+          <div className="bg-secondary text-secondary-foreground p-3 md:p-4 flex items-center justify-between border-b border-border/30">
+            <div className="flex bg-background rounded-md overflow-hidden border border-border/50 shadow-sm">
+              <button
+                className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                  activeTab === "write"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-background text-foreground hover:bg-secondary/60"
+                }`}
+                onClick={() => setActiveTab("write")}
+              >
+                <MessageSquare className="w-3 h-3 inline mr-1" />
+                WRITE
+              </button>
+              <button
+                className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                  activeTab === "support"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-background text-foreground hover:bg-secondary/60"
+                }`}
+                onClick={() => setActiveTab("support")}
+              >
+                <HelpCircle className="w-3 h-3 inline mr-1" />
+                SUPPORT
+              </button>
+            </div>
 
-        {/* Chat Messages Area */}
-        <div className="flex-1 flex flex-col min-h-0">
+            {/* TYPE | SPEAK buttons - only show in WRITE tab */}
+            {activeTab === "write" && (
+              <div className="flex bg-background rounded-md overflow-hidden border border-border/50 shadow-sm">
+                <button
+                  className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                    chatMode === "text"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "bg-background text-foreground hover:bg-secondary/60"
+                  }`}
+                  onClick={() => setChatMode("text")}
+                >
+                  TYPE
+                </button>
+                <button
+                  className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium transition-all duration-200 ${
+                    chatMode === "voice"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "bg-background text-foreground hover:bg-secondary/60"
+                  }`}
+                  onClick={() => setChatMode("voice")}
+                >
+                  SPEAK
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Chat Content */}
           <div className="relative flex-1 overflow-hidden">
-            <div className="h-full overflow-auto p-3 md:p-4 space-y-3 md:space-y-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-background">
+            <div
+              ref={chatContainerRef}
+              className="h-full overflow-auto p-2 space-y-3 md:space-y-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-background"
+            >
               {activeTab === "write" ? (
                 <>
                   {/* Welcome FAQ */}
@@ -130,11 +193,13 @@ export function ChatPanel() {
                     >
                       {message.role === "assistant" && (
                         <div className="flex items-start gap-3">
-                          <div className="w-7 h-7 rounded-full shadow-md border border-border/40 flex-shrink-0 bg-primary/10 flex items-center justify-center">
-                            <Bot className="w-4 h-4 text-primary" />
+                          <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <span className="text-primary text-xs font-medium">
+                              AI
+                            </span>
                           </div>
-                          <div className="max-w-[85%] rounded-xl px-4 py-3 bg-primary text-primary-foreground text-xs shadow-lg border border-primary/20 backdrop-blur-sm">
-                            <p className="mb-2 last:mb-0 text-xs leading-relaxed whitespace-pre-wrap">
+                          <div className="max-w-[85%] rounded-xl px-4 py-3 bg-primary text-primary-foreground text-xs shadow-lg border border-primary/20">
+                            <p className="text-xs leading-relaxed">
                               {message.content}
                             </p>
                           </div>
@@ -142,7 +207,7 @@ export function ChatPanel() {
                       )}
 
                       {message.role === "user" && (
-                        <div className="max-w-[85%] rounded-xl px-4 py-3 bg-secondary text-secondary-foreground text-xs shadow-lg border border-secondary/20 backdrop-blur-sm">
+                        <div className="max-w-[85%] rounded-xl px-4 py-3 bg-secondary text-secondary-foreground text-xs shadow-lg border border-secondary/20">
                           <p className="whitespace-pre-wrap text-xs leading-relaxed">
                             {message.content}
                           </p>
@@ -153,84 +218,91 @@ export function ChatPanel() {
 
                   {/* Loading indicator */}
                   {isLoading && (
-                    <div className="flex gap-3 justify-start">
-                      <div className="w-7 h-7 rounded-full shadow-md border border-border/40 flex-shrink-0 bg-primary/10 flex items-center justify-center">
-                        <Bot className="w-4 h-4 text-primary" />
+                    <div className="flex items-start gap-3">
+                      <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span className="text-primary text-xs font-medium">
+                          AI
+                        </span>
                       </div>
-                      <div className="bg-primary text-primary-foreground rounded-xl px-4 py-3 text-xs shadow-lg border border-primary/20 backdrop-blur-sm">
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-primary-foreground/70 rounded-full animate-bounce"></div>
-                          <div
-                            className="w-2 h-2 bg-primary-foreground/70 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.1s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-primary-foreground/70 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
+                      <div className="bg-primary/5 rounded-xl px-4 py-3 border border-primary/10">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-75"></div>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-150"></div>
                         </div>
                       </div>
                     </div>
                   )}
-                  <div ref={messagesEndRef} />
                 </>
               ) : (
-                /* Support Chat Content */
-                <div className="text-center text-muted-foreground p-8">
-                  <h3 className="text-lg font-semibold mb-2">Support Chat</h3>
-                  <p className="text-sm mb-6">
-                    Get help with using Tixae effectively
-                  </p>
-                  <div className="mt-6 space-y-3 text-left max-w-md mx-auto">
-                    <div className="bg-background/60 backdrop-blur-sm p-3 rounded-lg border border-border/30 shadow-sm">
-                      <div className="text-xs text-muted-foreground mb-1">
-                        Support Bot
-                      </div>
-                      <div className="text-sm">
-                        Hi! I'm here to help you get the most out of Tixae. What
-                        questions do you have?
-                      </div>
+                <>
+                  {/* Support Chat Content */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-7 h-7 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <HelpCircle className="w-4 h-4 text-secondary" />
+                    </div>
+                    <div className="max-w-[85%] rounded-xl px-4 py-3 bg-secondary text-secondary-foreground text-xs shadow-lg border border-secondary/20">
+                      <p className="text-xs leading-relaxed mb-2">
+                        👋 Hi! I'm your support assistant. I can help you with:
+                      </p>
+                      <ul className="text-xs space-y-1 text-secondary-foreground/80">
+                        <li>• Getting started with the platform</li>
+                        <li>• Troubleshooting issues</li>
+                        <li>• Feature explanations</li>
+                        <li>• Account questions</li>
+                      </ul>
+                      <p className="text-xs leading-relaxed mt-2">
+                        What can I help you with today?
+                      </p>
                     </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>
 
-          {/* Chat Input */}
-          <div className="flex-shrink-0 p-4 border-t border-border/50 bg-card/50 backdrop-blur-sm rounded-b-2xl">
-            <div className="flex gap-2">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder={
-                  activeTab === "write"
-                    ? "Start typing here to respond to your assistant above"
-                    : "Ask a support question..."
-                }
-                className="flex-1 text-xs bg-background/50 backdrop-blur-sm border-border/30"
-                disabled={isLoading}
-              />
-              <Button
-                isIconOnly
-                variant="ghost"
-                className="w-10 h-10 hover:bg-secondary/60 backdrop-blur-sm"
-                disabled={isLoading}
-              >
-                <Mic className="h-4 w-4" />
-              </Button>
-              <Button
-                isIconOnly
-                color="primary"
-                onPress={handleSend}
-                disabled={!input.trim() || isLoading}
-                className="w-10 h-10 shadow-md hover:shadow-lg transition-shadow"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
+          {/* Input Area */}
+          {((activeTab === "write" && chatMode === "text") ||
+            activeTab === "support") && (
+            <div className="px-3 py-2 bg-card/50 shadow-sm">
+              <form onSubmit={handleSendMessage} className="relative">
+                <textarea
+                  ref={textareaRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  className="w-full min-h-[79px] md:min-h-[79px] lg:min-h-[105px] xl:min-h-[141px] p-4 pr-12 border border-border/40 bg-background/80 text-foreground rounded-xl text-xs resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 shadow-sm placeholder:text-muted-foreground/50 backdrop-blur-sm transition-all duration-200"
+                  placeholder={
+                    activeTab === "support"
+                      ? "Ask a support question..."
+                      : "Type your message here..."
+                  }
+                  rows={1}
+                />
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-primary hover:bg-primary/10 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
+
+              {/* Powered by section */}
+              <div className="flex items-center justify-center pt-2 text-xs text-muted-foreground/70">
+                <span>Powered by Tixae</span>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Voice Mode Indicator */}
+          {activeTab === "write" && chatMode === "voice" && (
+            <div className="px-3 py-2 bg-card/50 shadow-sm">
+              <div className="text-center text-sm text-muted-foreground py-4 bg-primary/5 rounded-lg border border-primary/20">
+                🎤 Voice mode active - Click to start speaking
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
