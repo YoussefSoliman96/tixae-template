@@ -81,7 +81,7 @@ Start typing to begin your creative journey...`);
           onShowFAQ={() => setShowFAQ(false)}
           showFAQButton={true}
         />
-        <div className="flex-1 overflow-y-auto bg-transparent relative">
+        <div className="flex-1 overflow-y-auto bg-background relative z-50">
           {/* Scroll indicator */}
           <div className="absolute top-4 right-4 text-xs text-muted-foreground/60 bg-card/80 backdrop-blur-sm rounded px-2 py-1 border border-border/30 z-10">
             Scroll this area to view all content
@@ -99,7 +99,7 @@ Start typing to begin your creative journey...`);
           </div>
 
           {/* Content sections */}
-          <div className="px-6 pb-6 space-y-6">
+          <div className="px-6 space-y-6">
             {/* Welcome section */}
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-primary">
@@ -179,19 +179,13 @@ Start typing to begin your creative journey...`);
               </p>
             </div>
 
-            {/* Footer */}
-            <div className="mt-8 pt-6 border-t border-border/30">
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={() => setShowFAQ(false)}
-                  className="text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-secondary/20 transition-colors text-sm"
-                >
-                  Hide Welcome Message
-                </button>
-                <p className="text-xs text-muted-foreground">
-                  Start typing here to respond to your assistant above
-                </p>
-              </div>
+            {/* Powered by section */}
+            <div className="flex items-center justify-center pt-10">
+              <img
+                src="/Powered_by_Tixae.png"
+                alt="Powered by Tixae.ai"
+                className="h-4 opacity-70 hover:opacity-100 transition-opacity"
+              />
             </div>
           </div>
         </div>

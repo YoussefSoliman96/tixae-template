@@ -33,7 +33,7 @@ export function ControlPanel() {
   };
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full">
       <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-xl border border-border/30 overflow-hidden">
         {/* Content */}
         <div className="flex flex-col lg:flex-row">
@@ -174,7 +174,7 @@ export function ControlPanel() {
                     key={tool.key}
                     variant="solid"
                     size="sm"
-                    className="text-xs h-8 bg-secondary/60 text-secondary-foreground hover:bg-secondary shadow-sm hover:shadow-md transition-all duration-200"
+                    className="text-xs h-8 bg-secondary text-secondary-foreground hover:bg-secondary shadow-sm hover:shadow-md transition-all duration-200"
                     onPress={() => handleToolAction(tool.key)}
                   >
                     <span>{tool.text}</span>
