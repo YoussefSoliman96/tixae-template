@@ -11,7 +11,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-poppins)", "system-ui", "sans-serif"],
+        sans: ["Figtree", "system-ui", "sans-serif"],
+        body: ["Figtree", "system-ui", "sans-serif"],
+        heading: ["Figtree", "system-ui", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
